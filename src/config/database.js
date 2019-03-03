@@ -4,7 +4,7 @@ module.exports = {
   username: 'docker',
   password: 'docker',
   database: 'BarberTest',
-  operatorAliases: false,
+  operatorsAliases: false,
   define: {
     timestamps: true,
     underscored: true,
