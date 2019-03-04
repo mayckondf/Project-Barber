@@ -3,6 +3,8 @@
 {% block body %}
   <form action="/signin"  method="post">
 
+    {% include "_partials/flash.njk" %}
+
     <img src="/images/barber.svg" height="82" />
 
     <input type="email" name="email" placeholder="Seu Email">

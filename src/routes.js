@@ -5,6 +5,8 @@ const multerConfig = require('./config/multer')
 const upload = require('multer')(multerConfig)
 const authMiddleware = require('./app/middlewares/auth')
 const guestMiddleware = require('./app/middlewares/guest')
+const DashboardController = require('./app/controllers/DashboardController')
+const FileController = require('./app/controllers/FileController')
 
 const routes = express.Router()
 
@@ -12,7 +14,7 @@ routes.use((req, res, next) => {
   res.locals.flashSucces = req.flash('success')
   res.locals.flashError = req.flash('error')
 
-  next()
+  return next()
 })
 
 routes.get('/', (req, res) => res.redirect('/signin'))
@@ -25,7 +27,9 @@ routes.post('/signup', upload.single('avatar'), UserController.store)
 
 routes.use('/app', authMiddleware)
 
-routes.get('/app/dashboard', (req, res) => res.render('dashboard'))
+routes.get('/app/dashboard', DashboardController.index)
 routes.get('/app/logout', SessionController.destroy)
+
+routes.get('/files/:file', FileController.show)
 
 module.exports = routes
