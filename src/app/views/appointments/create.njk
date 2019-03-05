@@ -2,7 +2,7 @@
 
 {% block body %}
   <div class="content">
-    <strong>Agendamento de horário</strong>
+    <strong>Agendando horário</strong>
 
     <div class="provider">
       <div>
@@ -10,23 +10,22 @@
         <strong>{{ provider.name }}</strong>
       </div>
     </div>
-    <form action="/app/appointments/{{ provider.id }}" method="post">
+
+    <form action="/app/appointments/new/{{ provider.id }}" method="post">
       <input type="text" class="flatpickr" placeholder="Escolha uma data">
 
-      <div id="hours">
+      <div id="hours"></div>
 
-      </div>
       <button type="submit">Agendar</button>
     </form>
-
   </div>
 
   <script type="text/javascript">
     flatpickr('.flatpickr', {
       minDate: new Date(),
-      dateFormat: 'd/m/y',
-      onChange: function(date){
-        fetch(`/app/available/{{ provider.id }}?date=${date[0].getTime()}`).then(function(response){
+      dateFormat: 'd/m/Y',
+      onChange: function (date) {
+        fetch(`/app/available/{{ provider.id }}?date=${date[0].getTime()}`).then(function (response) {
           response.text().then(function (html) {
             document.getElementById('hours').innerHTML = html
           })

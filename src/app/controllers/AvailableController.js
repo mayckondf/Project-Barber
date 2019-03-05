@@ -12,7 +12,7 @@ class AvailableController {
         date: {
           [Op.between]: [
             date.startOf('day').format(),
-            date.endOf('dat').format()
+            date.endOf('day').format()
           ]
         }
       }
@@ -23,6 +23,7 @@ class AvailableController {
       '9:00',
       '10:00',
       '11:00',
+      '12:00',
       '13:00',
       '14:00',
       '15:00',
@@ -42,10 +43,12 @@ class AvailableController {
         time,
         value: value.format(),
         available:
-          value.isSameOrAfter(moment()) &&
-          !appointments.find(a => moment(a.date).format('HH:MM') === time)
+          value.isAfter(moment()) &&
+          !appointments.find(a => moment(a.date).format('HH:mm') === time)
       }
     })
+
+    console.log(available)
 
     return res.render('available/index', { available })
   }
